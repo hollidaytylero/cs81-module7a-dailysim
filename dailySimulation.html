@@ -12,7 +12,123 @@
   <script>
     const output = document.getElementById("output");
     
-    # ADD CODE HERE
+ // SHOWS the activities that happen during my simulated day.
+    const dailyActivities = [
+      { time: "7:00 AM", activity: "Wake up and get dressed", emoji: "⏰" },
+      { time: "7:30 AM", activity: "Eat breakfast and drink protein smoothie", emoji: "🥞" },
+      { time: "8:00 AM", activity: "Get set up on computer for online school and read for a bit", emoji: "🚗" },
+      { time: "10:00 AM", activity: "Attend class and complete assignments", emoji: "📚" },
+      { time: "12:30 PM", activity: "Eat lunch with my parents or a friend", emoji: "🍕" },
+      { time: "3:00 PM", activity: "Train for track and do weights", emoji: "🏃" },
+      { time: "5:30 PM", activity: "Finish my homework", emoji: "💻" },
+      { time: "7:00 PM", activity: "Eat dinner watch a movie or do something relaxing", emoji: "🍽️" },
+      { time: "10:30 PM", activity: "Go to sleep", emoji: "😴" }
+    ];
+
+    // Stores possible surprise or unexpected activities.
+    const surpriseActivities = [
+      "A friend invites me to eat ice cream 🍦",
+      "Short track practice 🎉",
+      "I find extra time to play video games on my computer 🎮",
+      "I receive an extra homework assignment or extra credit 😲",
+    ];
+
+    // Stores different moods that can appear during the simulation.
+    const moods = [
+      "focused 🤓",
+      "tired 😴",
+      "excited 🤩",
+      "relaxed 😌"
+      "energized 😄",
+      "nervous 😅"
+    ];
+
+    // Keeps track of which activity will be displayed next.
+    let activityIndex = 0;
+
+    // Select a random surprise activity.
+    const randomSurprise =
+      surpriseActivities[
+        Math.floor(Math.random() * surpriseActivities.length)
+      ];
+
+    // Selects a random mood for the day.
+    const randomMood =
+      moods[Math.floor(Math.random() * moods.length)];
+
+    // Chooses a random point in the schedule for the surprise to happen.
+    const surpriseIndex =
+      Math.floor(Math.random() * dailyActivities.length);
+
+    // Displays the starting message before the schedule begins.
+    output.innerHTML = `
+      <p>Today's starting mood: <strong>${randomMood}</strong></p>
+      <p>Starting my day...</p>
+    `;
+
+    // setInterval repeatedly runs this code every 1.5 seconds.
+    // This makes the daily activities appear one at a time.
+    const scheduleInterval = setInterval(() => {
+
+      // Checks whether there are still activities left to show.
+      if (activityIndex < dailyActivities.length) {
+
+        // Gets the current activity object.
+        const currentActivity = dailyActivities[activityIndex];
+
+        // Updates the DOM with the activity's time, emoji, and description.
+        output.innerHTML = `
+          <p style="font-size: 2rem;">${currentActivity.emoji}</p>
+          <p><strong>${currentActivity.time}</strong></p>
+          <p>${currentActivity.activity}</p>
+        `;
+
+        // SURPRISE TWIST:
+        // A random event appears at a random point during the day.
+        if (activityIndex === surpriseIndex) {
+          output.innerHTML += `
+            <p style="
+              margin: 25px auto;
+              padding: 15px;
+              max-width: 500px;
+              background-color: pink;
+              border-radius: 10px;
+            ">
+              Surprise: ${randomSurprise}
+            </p>
+          `;
+
+          // Changes the background when a surprise occurs.
+          document.body.style.backgroundColor = "#ffe4f2";
+        } else {
+          // Returns the background to its original color.
+          document.body.style.backgroundColor = "#eeeeff";
+        }
+
+        // Moves to the next activity.
+        activityIndex++;
+
+      } else {
+
+        // Stops the schedule loop after every activity has been displayed.
+        clearInterval(scheduleInterval);
+
+        // Displays a finished message at the end.
+        output.innerHTML = `
+          <p style="font-size: 3rem;">🌙</p>
+          <p><strong>My simulated day is complete!</strong></p>
+          <p>Good night!</p>
+        `;
+
+        // Changes the background color for night.
+        document.body.style.backgroundColor = "#c9c9f5";
+      }
+
+    }, 1500);
+  </script>
+
+</body>
+</html>
 
   </script>
 
